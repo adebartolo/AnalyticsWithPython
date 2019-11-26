@@ -9,8 +9,8 @@
   text-align: center;
   width: auto;
   font-size: 20px;
-  padding-left: 4%;
-  padding-right: 4%;
+  padding-left: 3%;
+  padding-right: 3%;
 }
 .topnav {
   color: black;
@@ -32,7 +32,9 @@
 body {
   font-family: "arial";
   /* margin: 2em; */
-  margin: 50px;
+  margin: 45px;
+  background-image: linear-gradient(to right, #C2FFD8,
+    #465EFB);
 }
 #myname {
   text-align: center;
@@ -57,4 +59,9 @@ body {
 a {
   text-decoration: none;
   color: black;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
