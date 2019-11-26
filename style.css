@@ -30,7 +30,6 @@
   color: black;
 }
 body {
-  font-family: "calibri";
   /* margin: 2em; */
   margin: 45px;
   /*background-image: linear-gradient(to right, #2AFADF,
@@ -41,11 +40,10 @@ body {
   font-size: 45px;
   color: black;
   text-decoration: none;
-  font-family: "calibri";
+  font-family: "arial";
 }
 #p1 {
   color: black;
-  font-family: "calibri";
 }
 .about {
   color: black;
@@ -67,7 +65,4 @@ a {
   margin-left: auto;
   margin-right: auto;
   text-align:center;
-}
-* {
-  font-family: "calibri";
 }
