@@ -5,7 +5,7 @@
 }
 /* Style the links inside the navigation bar */
 .topnav a {
-  color: black;
+  color: darkgray;
   text-align: center;
   width: auto;
   font-size: 20px;
@@ -13,7 +13,7 @@
   padding-right: 3%;
 }
 .topnav {
-  color: black;
+  color: darkgray;
   text-align: center;
   width: auto;
   font-size: 20px;
@@ -23,7 +23,7 @@
 /* Change the color of links on hover */
 .topnav a:hover {
   font-weight: bold;
-  color: black;
+  color: darkgray;
 }
 /* Add a color to the active/current link */
 .topnav a.active {
