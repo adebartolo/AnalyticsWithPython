@@ -60,3 +60,9 @@ a {
   text-decoration: none;
   color: black;
 }
+.centerpic {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align:center;
+}
