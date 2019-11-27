@@ -19,6 +19,7 @@
   font-size: 20px;
   padding-left: 2%;
   padding-right: 2%;
+  font-family: "Avenir";
 }
 /* Change the color of links on hover */
 .topnav a:hover {
@@ -34,16 +35,18 @@ body {
   margin: 45px;
   /*background-image: linear-gradient(to right, #2AFADF,
   #4C83FF);*/
+  font-family: "Avenir";
 }
 #myname {
   text-align: center;
   font-size: 45px;
   color: black;
   text-decoration: none;
-  font-family: "arial";
+  font-family: "Avenir";
 }
 #p1 {
   color: black;
+  font-family: "Avenir";
 }
 .about {
   color: black;
@@ -54,11 +57,13 @@ body {
   padding-top: 2%;
   padding-left: 5%;
   padding-right: 5%;
+  font-family: "Avenir";
 }
 /* Clear floats after the columns */
 a {
   text-decoration: none;
   color: black;
+  font-family: "Avenir";
 }
 .centerpic {
   display: block;
