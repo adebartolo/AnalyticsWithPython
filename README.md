@@ -14,7 +14,7 @@ ID | Project
 
 ## Summary
 
-**1 - Online Business Sales 2017-2019**
+**[1] Online Business Sales 2017-2019**
 
 Easiest tasks: Using Matplotlib made creating graphs a seamless experience.
 
@@ -30,7 +30,7 @@ The 3-minute summary was most likely the most important part of the project. It 
 - It is helpful to draft a hypothesis and make a prediction about future trends
 - Remember that correlation does not equal causation; there may be underlying unaccounted variables
 
-**2 - OpenWeatherMap**
+**[2] OpenWeatherMap**
 
 Easiest tasks: It was easy to set up graphs to visualize how the latitude affects various characteristics.
 
@@ -39,7 +39,7 @@ Challenging tasks: The most difficult part was automating a way to gather data a
 Insights: This project can be expanded in many ways. However, is important to not waste time "reinventing the wheel.” Historical climate data is already being explored and visualized by many researchers. It would be beneficial to work with other researchers to figure out what work still needs to be done to create further insights.
 
 
-**3 - Women's E-Commerce Clothing Reviews**
+**[3] Women's E-Commerce Clothing Reviews**
 
 Easiest tasks: Despite having limited experience with word clouds, it was easy to implement.
 
