@@ -6,9 +6,9 @@ This repository serves to demonstrate the applications of Python and several lib
 
 ID | Project 
 -- | ----
-1 | Online Business Sales 2017-2019
-2 | OpenWeatherMap
-3 | Women's E-Commerce Clothing Reviews
+1 | [Online Business Sales 2017-2019](https://github.com/adebartolo/AnalyticsWithPython/blob/master/Online_Business_Sales_2017_2019.ipynb)
+2 | [OpenWeatherMap](https://github.com/adebartolo/AnalyticsWithPython/blob/master/OpenWeatherMap_API.ipynb)
+3 | [Women's E-Commerce Clothing Reviews](https://github.com/adebartolo/AnalyticsWithPython/blob/master/Women's_E_Commerce_Clothing_Reviews.ipynb)
 
 
 
