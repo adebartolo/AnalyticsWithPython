@@ -1,5 +1,5 @@
 '''
-Find which events are happening at the Forest Hills Stadium This Year
+Find which events are happening at the Forest Hills Stadium this year
 '''
 
 import pdfplumber, requests, pandas as pd, urllib.parse, logging
