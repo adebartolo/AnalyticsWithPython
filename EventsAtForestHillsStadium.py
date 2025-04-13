@@ -20,6 +20,7 @@ with pdfplumber.open(pdf_path) as pdf:
         for row in table[1:]:
             name = row[0].strip() if row[0] else ""
             time = row[1].strip() if len(row) > 1 and row[1] else ""
+            # Get performer name, excluding event info after the colon or dash
             for sep in [":", "–", "-"]:
                 if sep in name:
                     performer = name.split(sep)[0].strip()
