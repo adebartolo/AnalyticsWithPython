@@ -11,6 +11,7 @@ pdf_path = "forest_hills.pdf"
 with open(pdf_path, "wb") as f:
     f.write(requests.get(url).content)
 
+# Grab event data by extracting from PDF file
 data = []
 with pdfplumber.open(pdf_path) as pdf:
     for page in pdf.pages:
@@ -29,6 +30,7 @@ with pdfplumber.open(pdf_path) as pdf:
 
 df = pd.DataFrame(data, columns=["Event Name", "Performer", "Start Time", "Venue"])
 
+# Use Wiki to get quick info on each performer
 def get_wiki_summary(name):
     url = f"https://en.wikipedia.org/api/rest_v1/page/summary/{urllib.parse.quote(name)}"
     r = requests.get(url)
