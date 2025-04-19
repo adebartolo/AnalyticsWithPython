@@ -2,7 +2,10 @@
 Thinking of moving? Check if your desired location is near a Superfund site using this tool.
 Disclaimer: Data may be outdated—visit the EPA website for the latest info.
 https://www.epa.gov/superfund/search-superfund-sites-where-you-live
-This program requires lat/long coordinates.
+
+This program requires lat/long coordinates. 
+For mapping tools like Folium or Google Maps, 4–6 decimal places is ideal. 
+More than 7 is rarely needed unless you're doing high-precision GPS work.
 '''
 
 import folium
