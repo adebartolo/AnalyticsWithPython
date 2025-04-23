@@ -3,14 +3,17 @@
 
 This repository serves to demonstrate the applications of Python and several libraries for data analysis. Python code is saved in Jupyter notebook (.ipynb) files, while datasets can be found in the csv files.
 
-
-ID | Project 
--- | ----
-1 | [Online Business Sales 2017-2019](https://github.com/adebartolo/AnalyticsWithPython/blob/master/Online_Business_Sales_2017_2019.ipynb)
-2 | [OpenWeatherMap](https://github.com/adebartolo/AnalyticsWithPython/blob/master/OpenWeatherMap_API.ipynb)
-3 | [Women's E-Commerce Clothing Reviews](https://github.com/adebartolo/AnalyticsWithPython/blob/master/Women's_E_Commerce_Clothing_Reviews.ipynb)
-
-
+ID | Project  
+-- | ----  
+1 | [Online Business Sales 2017-2019](https://github.com/adebartolo/AnalyticsWithPython/blob/master/Online_Business_Sales_2017_2019.ipynb)  
+2 | [OpenWeatherMap](https://github.com/adebartolo/AnalyticsWithPython/blob/master/OpenWeatherMap_API.ipynb)  
+3 | [Women's E-Commerce Clothing Reviews](https://github.com/adebartolo/AnalyticsWithPython/blob/master/Women's_E_Commerce_Clothing_Reviews.ipynb)  
+4 | [Events At Forest Hills Stadium](https://github.com/adebartolo/AnalyticsWithPython/blob/master/EventsAtForestHillsStadium.py)  
+5 | [OpenWeatherMap API](https://github.com/adebartolo/AnalyticsWithPython/blob/master/OpenWeatherMap_API.ipynb)  
+6 | [Python Data Transformation](https://github.com/adebartolo/AnalyticsWithPython/blob/master/Python_Data_Transformation.py)  
+7 | [SQL Parser](https://github.com/adebartolo/AnalyticsWithPython/blob/master/SQL_Parser.py)  
+8 | [Spark vs Pandas](https://github.com/adebartolo/AnalyticsWithPython/blob/master/Spark_vs_Pandas.py)  
+9 | [Superfund Site Finder NY](https://github.com/adebartolo/AnalyticsWithPython/blob/master/SuperfundSiteFinderNY.py)
 
 ## Summary
 
