@@ -13,6 +13,7 @@ ID | Project
 6 | [SQL Parser](https://github.com/adebartolo/AnalyticsWithPython/blob/master/SQL_Parser.py)  
 7 | [Spark vs Pandas](https://github.com/adebartolo/AnalyticsWithPython/blob/master/Spark_vs_Pandas.py)  
 8 | [Superfund Site Finder NY](https://github.com/adebartolo/AnalyticsWithPython/blob/master/SuperfundSiteFinderNY.py)
+9 | [Tell me Mr. Weather, what should I wear?](https://github.com/adebartolo/AnalyticsWithPython/blob/master/WhatShouldIWear.py)
 
 ## Summary
 
