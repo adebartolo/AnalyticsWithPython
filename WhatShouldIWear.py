@@ -92,7 +92,7 @@ def get_weather_outfit_suggestion(user_input_date=None, user_input_time=None):
 
     location = "New York City"
     latitude = 40.7128
-    longitude = -74.0060  # Corrected to negative
+    longitude = -74.0060 
 
     url = "https://api.open-meteo.com/v1/forecast"
     params = {
