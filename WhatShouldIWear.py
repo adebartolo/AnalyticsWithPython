@@ -1,10 +1,21 @@
-'''
-Say goodbye to over or under dressing! This uses location and weather info to infer what the user should wear.
-'''
-
 import requests
 import datetime
 import pytz
+import matplotlib.pyplot as plt
+
+# Constants
+LOCATION = "New York City"
+LATITUDE = 40.7128
+LONGITUDE = -74.0060
+TIMEZONE = "America/New_York"
+EASTERN = pytz.timezone(TIMEZONE)
+NOW = datetime.datetime.now(EASTERN)
+DATE_TIME = NOW.strftime("%A, %B %d, %Y at %I:%M %p %Z")
+
+# Utility Functions
+
+def convert_to_fahrenheit(celsius):
+    return round(celsius * 9/5 + 32, 1)
 
 def convert_to_military_time(user_input_time):
     try:
@@ -32,10 +43,12 @@ def get_outfit_suggestions(temp_f, precip, wind, hour):
         outfit.append("Light Jacket")
     elif temp_f < 70:
         outfit.append("Long Sleeves")
-    else:
+    elif temp_f < 80:
         outfit.append("T-Shirt or Tank Top")
+    else:
+        outfit.append("Wear a Hat to Protect from the Sun")
 
-    if precip > 40:
+    if precip >= 40:
         outfit.append("Umbrella")
     elif precip >= 20:
         outfit.append("Hoodie")
@@ -48,6 +61,27 @@ def get_outfit_suggestions(temp_f, precip, wind, hour):
 
     return outfit
 
+# Fetch weather data
+def fetch_weather_data(latitude, longitude, timezone, hourly_vars=None, daily_vars=None):
+    url = "https://api.open-meteo.com/v1/forecast"
+    params = {
+        "latitude": latitude,
+        "longitude": longitude,
+        "timezone": timezone
+    }
+    if hourly_vars:
+        params["hourly"] = ",".join(hourly_vars)
+    if daily_vars:
+        params["daily"] = ",".join(daily_vars)
+    try:
+        response = requests.get(url, params=params)
+        response.raise_for_status()
+        return response.json()
+    except Exception as e:
+        print(f"Error fetching weather data: {e}")
+        return None
+
+# Outfit Suggestion based on user input (date, time)
 def get_weather_outfit_suggestion(user_input_date=None, user_input_time=None):
     eastern = pytz.timezone("America/New_York")
     
@@ -88,89 +122,45 @@ def get_weather_outfit_suggestion(user_input_date=None, user_input_time=None):
     final_datetime = eastern.localize(final_datetime)
     rounded_datetime = final_datetime.replace(minute=0, second=0, microsecond=0)
 
-    print(f"Rounded Time: {rounded_datetime.strftime('%I:%M %p')}")
+    # Output formatting for clean display
+    print(f"\nOutfit Suggestion for {rounded_datetime.strftime('%A, %B %d, %Y at %I:%M %p')} in {LOCATION}:")
 
-    location = "New York City"
-    latitude = 40.7128
-    longitude = -74.0060 
-
-    url = "https://api.open-meteo.com/v1/forecast"
-    params = {
-        "latitude": latitude,
-        "longitude": longitude,
-        "hourly": "temperature_2m,precipitation_probability,wind_speed_10m,weather_code",
-        "daily": "sunrise,sunset,temperature_2m_max,temperature_2m_min",
-        "timezone": "America/New_York"
-    }
-
-    try:
-        response = requests.get(url, params=params)
-        response.raise_for_status()
-        data = response.json()
-    except Exception as e:
-        print(f"Error fetching weather data: {e}")
+    data = fetch_weather_data(
+        LATITUDE,
+        LONGITUDE,
+        TIMEZONE,
+        hourly_vars=["temperature_2m", "precipitation_probability", "wind_speed_10m", "weather_code"]
+    )
+    if not data:
         return
 
     hourly = data.get("hourly", {})
-    daily = data.get("daily", {})
-    if not hourly or not daily:
-        print("Incomplete weather data received.")
-        return
+    times = hourly.get("time", [])
+    temps = hourly.get("temperature_2m", [])
+    precips = hourly.get("precipitation_probability", [])
+    winds = hourly.get("wind_speed_10m", [])
+    codes = hourly.get("weather_code", [])
 
-    try:
-        closest_time = None
-        closest_index = None
-        closest_diff = float('inf')
+    suggestion = "Unable to determine outfit."
+    for i, time_str in enumerate(times):
+        time_obj = datetime.datetime.strptime(time_str, "%Y-%m-%dT%H:%M")
+        time_obj = eastern.localize(time_obj)
+        if rounded_datetime == time_obj:
+            temp_f = convert_to_fahrenheit(temps[i])
+            precip = precips[i]
+            wind = winds[i]
+            description = get_weather_code_description(codes[i])
 
-        for index, time in enumerate(hourly.get("time", [])):
-            available_time = eastern.localize(datetime.datetime.strptime(time, "%Y-%m-%dT%H:%M"))
-            diff = abs((available_time - rounded_datetime).total_seconds())
-            if diff < closest_diff:
-                closest_diff = diff
-                closest_time = available_time
-                closest_index = index
+            layers = "a light jacket" if temp_f < 65 else "short sleeves"
+            rain_gear = " and an umbrella" if precip > 40 else ""
+            suggestion = f"{temp_f}°F with {description}. Wear {layers}{rain_gear}."
+            break
 
-        if closest_time is None:
-            print("No matching hourly weather data.")
-            return
+    print(f"{suggestion}\n")
 
-        temp_c = hourly["temperature_2m"][closest_index]
-        temp_f = temp_c * 9/5 + 32
-        wind = hourly["wind_speed_10m"][closest_index]
-        precip = hourly["precipitation_probability"][closest_index]
-        weather_code = hourly["weather_code"][closest_index]
-        weather_description = get_weather_code_description(weather_code)
-
-        sunrise = daily.get("sunrise", [None])[0]
-        sunset = daily.get("sunset", [None])[0]
-        if sunrise and sunset:
-            sunrise_time = datetime.datetime.strptime(sunrise, '%Y-%m-%dT%H:%M').strftime('%I:%M %p')
-            sunset_time = datetime.datetime.strptime(sunset, '%Y-%m-%dT%H:%M').strftime('%I:%M %p')
-        else:
-            sunrise_time = sunset_time = "N/A"
-
-        temp_max = daily.get("temperature_2m_max", [None])[0]
-        temp_min = daily.get("temperature_2m_min", [None])[0]
-
-    except Exception as e:
-        print(f"Error processing weather data: {e}")
-        return
-
-    formatted_date = datetime.datetime.strptime(user_input_date, "%m/%d/%Y").strftime("%B %d, %Y")
-    print(f"\nDate: {formatted_date}")
-    print(f"Weather in {location} at {rounded_datetime.strftime('%I:%M %p')} (local time):")
-    print(f"Temperature: {round(temp_f)}°F")
-    print(f"Wind Speed: {wind} km/h")
-    print(f"Precipitation Chance: {precip}%")
-    print(f"Weather: {weather_description}")
-    print(f"Sunrise: {sunrise_time}")
-    print(f"Sunset: {sunset_time}")
-
-    # Outfit suggestions
-    outfit = get_outfit_suggestions(temp_f, precip, wind, rounded_datetime.hour)
-    print("\nOutfit Suggestions:")
-    for item in outfit:
-        print(f"- {item}")
-
-# Example 
-get_weather_outfit_suggestion() #"04/24/2025", "11:48 PM"
+# Run functions for the 7-day forecast, 6-hour forecast, and outfit suggestion
+get_seven_day_weather_forecast()
+plot_seven_day_weather_forecast()
+get_weather_forecast_next_6_hours()
+plot_weather_forecast_next_6_hours()
+get_weather_outfit_suggestion()
