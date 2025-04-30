@@ -12,8 +12,7 @@ EASTERN = pytz.timezone(TIMEZONE)
 NOW = datetime.datetime.now(EASTERN)
 DATE_TIME = NOW.strftime("%A, %B %d, %Y at %I:%M %p %Z")
 
-# Utility Functions
-
+# Functions
 def convert_to_fahrenheit(celsius):
     return round(celsius * 9/5 + 32, 1)
 
