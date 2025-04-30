@@ -1,3 +1,7 @@
+'''
+Say goodbye to over or under dressing! This uses location and weather info to infer what the user should wear.
+'''
+
 import requests
 import datetime
 import pytz
