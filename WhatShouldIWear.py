@@ -1,7 +1,3 @@
-'''
-Say goodbye to over or under dressing! This uses location and weather info to infer what the user should wear.
-'''
-
 import requests
 import datetime
 import pytz
@@ -14,9 +10,9 @@ LONGITUDE = -74.0060
 TIMEZONE = "America/New_York"
 EASTERN = pytz.timezone(TIMEZONE)
 NOW = datetime.datetime.now(EASTERN)
-DATE_TIME = NOW.strftime("%A, %B %d, %Y at %I:%M %p %Z")
 
 # Functions
+
 def convert_to_fahrenheit(celsius):
     return round(celsius * 9/5 + 32, 1)
 
@@ -64,7 +60,6 @@ def get_outfit_suggestions(temp_f, precip, wind, hour):
 
     return outfit
 
-# Fetch weather data
 def fetch_weather_data(latitude, longitude, timezone, hourly_vars=None, daily_vars=None):
     url = "https://api.open-meteo.com/v1/forecast"
     params = {
@@ -84,10 +79,11 @@ def fetch_weather_data(latitude, longitude, timezone, hourly_vars=None, daily_va
         print(f"Error fetching weather data: {e}")
         return None
 
-# Outfit Suggestion based on user input (date, time)
+# Outfit Suggestion
+
 def get_weather_outfit_suggestion(user_input_date=None, user_input_time=None):
     eastern = pytz.timezone("America/New_York")
-    
+
     if not user_input_date:
         user_input_date = input("Enter the date (MM/DD/YYYY) or press Enter to use the current date: ")
     if not user_input_time:
@@ -120,12 +116,11 @@ def get_weather_outfit_suggestion(user_input_date=None, user_input_time=None):
     military_time = convert_to_military_time(user_input_time)
     if military_time is None:
         return
-    
+
     final_datetime = datetime.datetime.strptime(f"{user_input_date} {military_time}", "%m/%d/%Y %H:%M")
     final_datetime = eastern.localize(final_datetime)
     rounded_datetime = final_datetime.replace(minute=0, second=0, microsecond=0)
 
-    # Output formatting for clean display
     print(f"\nOutfit Suggestion for {rounded_datetime.strftime('%A, %B %d, %Y at %I:%M %p')} in {LOCATION}:")
 
     data = fetch_weather_data(
@@ -144,7 +139,6 @@ def get_weather_outfit_suggestion(user_input_date=None, user_input_time=None):
     winds = hourly.get("wind_speed_10m", [])
     codes = hourly.get("weather_code", [])
 
-    suggestion = "Unable to determine outfit."
     for i, time_str in enumerate(times):
         time_obj = datetime.datetime.strptime(time_str, "%Y-%m-%dT%H:%M")
         time_obj = eastern.localize(time_obj)
@@ -153,15 +147,128 @@ def get_weather_outfit_suggestion(user_input_date=None, user_input_time=None):
             precip = precips[i]
             wind = winds[i]
             description = get_weather_code_description(codes[i])
-
             layers = "a light jacket" if temp_f < 65 else "short sleeves"
             rain_gear = " and an umbrella" if precip > 40 else ""
             suggestion = f"{temp_f}°F with {description}. Wear {layers}{rain_gear}."
-            break
+            print(suggestion)
+            return
 
-    print(f"{suggestion}\n")
+    print("Unable to determine outfit.\n")
 
-# Run functions for the 7-day forecast, 6-hour forecast, and outfit suggestion
+# 7-Day Forecast
+
+def get_seven_day_weather_forecast():
+    data = fetch_weather_data(
+        LATITUDE,
+        LONGITUDE,
+        TIMEZONE,
+        daily_vars=["temperature_2m_min", "temperature_2m_max", "weather_code"]
+    )
+    if not data:
+        return
+
+    daily = data.get("daily", {})
+    dates = daily.get("time", [])
+    tmin = daily.get("temperature_2m_min", [])
+    tmax = daily.get("temperature_2m_max", [])
+    codes = daily.get("weather_code", [])
+
+    print(f"\n7-Day Forecast for {LOCATION}:\n")
+    for i in range(len(dates)):
+        day = datetime.datetime.strptime(dates[i], "%Y-%m-%d").strftime("%A, %b %d")
+        desc = get_weather_code_description(codes[i])
+        print(f"{day}: {convert_to_fahrenheit(tmin[i])}°F - {convert_to_fahrenheit(tmax[i])}°F, {desc}")
+    print()
+
+def plot_seven_day_weather_forecast():
+    data = fetch_weather_data(
+        LATITUDE,
+        LONGITUDE,
+        TIMEZONE,
+        daily_vars=["temperature_2m_min", "temperature_2m_max"]
+    )
+    if not data:
+        return
+
+    dates = data["daily"]["time"]
+    tmin = [convert_to_fahrenheit(t) for t in data["daily"]["temperature_2m_min"]]
+    tmax = [convert_to_fahrenheit(t) for t in data["daily"]["temperature_2m_max"]]
+
+    days = [datetime.datetime.strptime(d, "%Y-%m-%d").strftime("%a") for d in dates]
+
+    plt.figure(figsize=(8, 4))
+    plt.plot(days, tmin, label="Min Temp", marker="o")
+    plt.plot(days, tmax, label="Max Temp", marker="o")
+    plt.title("7-Day Temperature Forecast")
+    plt.ylabel("Temperature (°F)")
+    plt.xlabel("Day")
+    plt.grid(True)
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+
+# 6-Hour Forecast
+
+def get_weather_forecast_next_6_hours():
+    data = fetch_weather_data(
+        LATITUDE,
+        LONGITUDE,
+        TIMEZONE,
+        hourly_vars=["temperature_2m", "weather_code"]
+    )
+    if not data:
+        return
+
+    now = datetime.datetime.now(EASTERN).replace(minute=0, second=0, microsecond=0)
+    hourly = data["hourly"]
+    times = [datetime.datetime.strptime(t, "%Y-%m-%dT%H:%M") for t in hourly["time"]]
+    temps = hourly["temperature_2m"]
+    codes = hourly["weather_code"]
+
+    print(f"\nNext 6-Hour Forecast for {LOCATION}:\n")
+    count = 0
+    for i, t in enumerate(times):
+        t_local = EASTERN.localize(t)
+        if t_local >= now and count < 6:
+            desc = get_weather_code_description(codes[i])
+            print(f"{t_local.strftime('%I:%M %p')}: {convert_to_fahrenheit(temps[i])}°F, {desc}")
+            count += 1
+    print()
+
+def plot_weather_forecast_next_6_hours():
+    data = fetch_weather_data(
+        LATITUDE,
+        LONGITUDE,
+        TIMEZONE,
+        hourly_vars=["temperature_2m"]
+    )
+    if not data:
+        return
+
+    now = datetime.datetime.now(EASTERN).replace(minute=0, second=0, microsecond=0)
+    times = [datetime.datetime.strptime(t, "%Y-%m-%dT%H:%M") for t in data["hourly"]["time"]]
+    temps = [convert_to_fahrenheit(t) for t in data["hourly"]["temperature_2m"]]
+
+    filtered_times = []
+    filtered_temps = []
+    count = 0
+    for i, t in enumerate(times):
+        t_local = EASTERN.localize(t)
+        if t_local >= now and count < 6:
+            filtered_times.append(t_local.strftime("%I %p"))
+            filtered_temps.append(temps[i])
+            count += 1
+
+    plt.figure(figsize=(8, 4))
+    plt.plot(filtered_times, filtered_temps, marker="o")
+    plt.title("Next 6 Hours Temperature Forecast")
+    plt.ylabel("Temperature (°F)")
+    plt.xlabel("Time")
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
+# Run functions
 get_seven_day_weather_forecast()
 plot_seven_day_weather_forecast()
 get_weather_forecast_next_6_hours()
