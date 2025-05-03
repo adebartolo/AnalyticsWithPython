@@ -8,9 +8,10 @@ import matplotlib.pyplot as plt
 
 # Constants
 LOCATION = "New York City"
-LATITUDE, LONGITUDE = 40.7128, -74.0060
+LATITUDE, LONGITUDE = 40.7128, -74.0060 
 TIMEZONE = "America/New_York"
 EASTERN = pytz.timezone(TIMEZONE)
+HOW_MANY_HRS = 24
 
 
 # Set global font settings
@@ -21,6 +22,7 @@ matplotlib.rcParams['axes.labelsize'] = 9
 matplotlib.rcParams['xtick.labelsize'] = 9
 matplotlib.rcParams['ytick.labelsize'] = 9
 matplotlib.rcParams['legend.fontsize'] = 9
+CHART_SIZE = (14, 4) 
 
 # Utility Functions (same as before)
 def convert_to_fahrenheit(celsius):
@@ -172,7 +174,7 @@ def plot_seven_day_weather_forecast():
     days = [datetime.datetime.strptime(d, "%Y-%m-%d").strftime("%a") for d in dates]
 
     # Setting up the plot
-    fig, ax1 = plt.subplots(figsize=(8, 4))
+    fig, ax1 = plt.subplots(figsize=CHART_SIZE)
 
     # Plot temperature and wind on primary Y-axis
     ax1.plot(days, tmin, label="Min Temp (°F)", marker="o", color="cornflowerblue")
@@ -226,7 +228,7 @@ def plot_weather_forecast_next_6_hours():
     count = 0
     for i, t in enumerate(times):
         t_local = EASTERN.localize(t)
-        if t_local >= now and count < 6:
+        if t_local >= now and count < HOW_MANY_HRS:
             filtered_times.append(t_local.strftime("%I %p"))
             filtered_temps.append(temps[i])
             filtered_precips.append(precips[i])
@@ -234,7 +236,7 @@ def plot_weather_forecast_next_6_hours():
             count += 1
 
     # Plotting the temperature and precipitation data
-    fig, ax1 = plt.subplots(figsize=(8, 4))
+    fig, ax1 = plt.subplots(figsize=CHART_SIZE)
 
     # Plot temperature on primary Y-axis (left)
     ax1.plot(filtered_times, filtered_temps, label="Temperature (°F)", marker="o", color="salmon")
