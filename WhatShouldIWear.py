@@ -5,6 +5,7 @@ import requests
 import datetime
 import pytz
 import matplotlib.pyplot as plt
+import matplotlib
 
 # Constants
 LOCATION = "New York City"
