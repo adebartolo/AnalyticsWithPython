@@ -1,7 +1,7 @@
 '''
 Thinking of moving? Check if your desired location is near a Superfund site using this tool.
 
-Disclaimer: Data may be outdated—visit the EPA website for the latest info.
+Disclaimer: Data may be outdated. Visit the EPA website for the latest info.
 https://www.epa.gov/superfund/search-superfund-sites-where-you-live
 
 This program requires lat/long coordinates. 
