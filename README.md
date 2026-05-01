@@ -9,11 +9,9 @@ ID | Project
 2 | [OpenWeatherMap](https://github.com/adebartolo/AnalyticsWithPython/blob/master/OpenWeatherMap_API.ipynb)  
 3 | [Women's E-Commerce Clothing Reviews](https://github.com/adebartolo/AnalyticsWithPython/blob/master/Women's_E_Commerce_Clothing_Reviews.ipynb)  
 4 | [Events At Forest Hills Stadium](https://github.com/adebartolo/AnalyticsWithPython/blob/master/EventsAtForestHillsStadium.py)  
-5 | [Python Data Transformation](https://github.com/adebartolo/AnalyticsWithPython/blob/master/Python_Data_Transformation.py)  
-6 | [SQL Parser](https://github.com/adebartolo/AnalyticsWithPython/blob/master/SQL_Parser.py)  
-7 | [Spark vs Pandas](https://github.com/adebartolo/AnalyticsWithPython/blob/master/Spark_vs_Pandas.py)  
-8 | [Superfund Site Finder NY](https://github.com/adebartolo/AnalyticsWithPython/blob/master/SuperfundSiteFinderNY.py)
-9 | [Tell me Mr. Weather, what should I wear?](https://github.com/adebartolo/AnalyticsWithPython/blob/master/WhatShouldIWear.py)
+5 | [Spark vs Pandas](https://github.com/adebartolo/AnalyticsWithPython/blob/master/Spark_vs_Pandas.py)  
+6 | [Superfund Site Finder NY](https://github.com/adebartolo/AnalyticsWithPython/blob/master/SuperfundSiteFinderNY.py)
+7 | [Tell me Mr. Weather, what should I wear?](https://github.com/adebartolo/AnalyticsWithPython/blob/master/WhatShouldIWear.py)
 
 ## Summary
 
