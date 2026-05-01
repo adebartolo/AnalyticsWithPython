@@ -12,6 +12,7 @@ ID | Project
 5 | [Spark vs Pandas](https://github.com/adebartolo/AnalyticsWithPython/blob/master/Spark_vs_Pandas.py)  
 6 | [Superfund Site Finder NY](https://github.com/adebartolo/AnalyticsWithPython/blob/master/SuperfundSiteFinderNY.py)
 7 | [Tell me Mr. Weather, what should I wear?](https://github.com/adebartolo/AnalyticsWithPython/blob/master/WhatShouldIWear.py)
+8 | [Sales Discount Engine](https://github.com/adebartolo/AnalyticsWithPython/blob/master/sales_discount_engine.ipynb)
 
 ## Summary
 
